@@ -1,3 +1,9 @@
+ALGORITHM:
+LinearSearch(array, key)
+  for each item in the array
+    if item == value
+      return its index
+
 // Linear Search in C
 
 #include <stdio.h>

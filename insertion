@@ -1,3 +1,4 @@
+ALGORITHM:
 insertionSort(array)
 mark first element as sorted
   for each unsorted element X

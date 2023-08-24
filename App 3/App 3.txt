@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX_NODES 100
+
+// Function to perform DFS traversal and identify connected components
+void dfs(int graph[MAX_NODES][MAX_NODES], bool visited[MAX_NODES], int num_nodes, int node, int component[MAX_NODES], int* component_size) {
+    visited[node] = true;
+    component[(*component_size)++] = node;
+    for (int i = 0; i < num_nodes; i++) {
+        if (graph[node][i] == 1 && !visited[i]) {
+            dfs(graph, visited, num_nodes, i, component, component_size);
+        }
+    }
+}
+
+// Function to find connected components
+void findConnectedComponents(int graph[MAX_NODES][MAX_NODES], int num_nodes) {
+    bool visited[MAX_NODES] = {false};
+    int components[MAX_NODES][MAX_NODES];
+    int num_components = 0;
+
+    for (int i = 0; i < num_nodes; i++) {
+        if (!visited[i]) {
+            int component[MAX_NODES];
+            int component_size = 0;
+            dfs(graph, visited, num_nodes, i, component, &component_size);
+            for (int j = 0; j < component_size; j++) {
+                components[num_components][j] = component[j];
+            }
+            num_components++;
+        }
+    }
+
+    // Display connected components
+    for (int i = 0; i < num_components; i++) {
+        printf("Connected Component %d: ", i + 1);
+        for (int j = 0; j < num_nodes; j++) {
+            if (components[i][j] != -1) {
+                printf("%d ", components[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int num_nodes;
+    printf("Enter the number of nodes: ");
+    scanf("%d", &num_nodes);
+
+    int adjacency_matrix[MAX_NODES][MAX_NODES];
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < num_nodes; i++) {
+        for (int j = 0; j < num_nodes; j++) {
+            scanf("%d", &adjacency_matrix[i][j]);
+        }
+    }
+
+    findConnectedComponents(adjacency_matrix, num_nodes);
+
+return 0;
+}
